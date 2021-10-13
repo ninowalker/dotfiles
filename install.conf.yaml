@@ -5,16 +5,11 @@
 - clean: ["~"]
 
 - create:
-    - ~/Git_Projects/Personal/GitHub
-    - ~/Git_Projects/Personal/GitHub/mrlesmithjr
-    - ~/Git_Projects/Personal/GitLab
-    - ~/Git_Projects/Work
-    - ~/Playground
-    - ~/Projects
+    - ~/dev
 
 - link:
-    ~/.atom:
-      path: .atom
+    # ~/.atom:
+    #   path: .atom
     ~/.bash_profile:
       path: .bash_profile
       force: true
@@ -40,12 +35,14 @@
     ~/.macos:
       path: .macos
       if: "[ `uname` = Darwin ]"
-    ~/.p10k.zsh:
-      path: .p10k.zsh
+    # ~/.p10k.zsh:
+    #   path: .p10k.zsh
+    ~/.condarc:
+      path: .condarc
     ~/.pylintrc:
       path: .pylintrc
-    ~/.rubocop.yml:
-      path: .rubocop.yml
+    # ~/.rubocop.yml:
+    #   path: .rubocop.yml
     ~/.tmux.conf:
       path: .tmux.conf
     ~/.vim:
@@ -56,6 +53,12 @@
       path: .yamllint.yml
     ~/.zshrc:
       path: .zshrc
+      force: true
+    ~/.zlogin:
+      path: .zlogin
+      force: true
+    ~/.zshenv:
+      path: .zshenv
       force: true
     ~/Library/Application Support/Code/User/:
       create: true
@@ -76,10 +79,10 @@
       description: Installing bash-git-prompt
     - command: if [ ! -f "$HOME/.netrc" ]; then touch "$HOME/.netrc"; fi
       description: Creating $HOME/.netrc
-    - command: if [[ ! -d "$HOME"/.oh-my-zsh ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME"/.oh-my-zsh; fi
-      description: Installing oh-my-zsh
-    - command: if [[ ! -d "$HOME"/powerlevel10k ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/powerlevel10k; fi
-      description: Installing Powerlevel10k
+    # - command: if [[ ! -d "$HOME"/.oh-my-zsh ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME"/.oh-my-zsh; fi
+    #   description: Installing oh-my-zsh
+    # - command: if [[ ! -d "$HOME"/powerlevel10k ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/powerlevel10k; fi
+    #   description: Installing Powerlevel10k
     - command: vim +BundleInstall +qall 2 &>/dev/null
       description: Installing VIM bundles
     - command: if [[ $(uname) == "Darwin" ]]; then source $HOME/.macos; fi

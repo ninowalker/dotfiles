@@ -1,94 +1,55 @@
+# https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
+# .zshrc is for interactive shell configuration. 
+
 export ZSH=$HOME/.oh-my-zsh
 
 # Path to your dotfiles installation.
 export DOTFILES_DIR="$HOME/.dotfiles"
 
-# Python Poetry settings
-# https://python-poetry.org/docs/master/configuration/#using-environment-variables
-export POETRY_VIRTUALENVS_IN_PROJECT=true
-
 # skip the verification of insecure directories
 # shellcheck disable=SC2034
 ZSH_DISABLE_COMPFIX="true"
 
-if [[ -d "$HOME"/powerlevel10k ]]; then
-	source "$HOME"/powerlevel10k/powerlevel10k.zsh-theme
-else
-	# ZSH_THEME="robbyrussell"
-	# ZSH_THEME="agnoster"
-	# ZSH_THEME="af-magic"
-	# ZSH_THEME="pygmalion"
-	# shellcheck disable=SC2034
-	#ZSH_THEME="avit"
-	ZSH_THEME="ys"
-fi
-
-# shellcheck disable=SC2034
-# plugins=(docker git nomad pip python terraform vagrant)
-
-# shellcheck source=/dev/null
+# # shellcheck source=/dev/null
 source "$ZSH"/oh-my-zsh.sh
 
-#### MacOS OS Check ####
+# your project folder that we can `c [tab]` to
+# export PROJECTS=~/Documents/Code
+export ZSH=$HOME/.dotfiles
 
-if [[ $(uname) == "Darwin" ]]; then
-	# Add color to folders/files
-	alias ls='ls -G'
+# all of our zsh files
+typeset -U config_files
+config_files=($ZSH/**/*.zsh)
 
-	if [ -f "/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-		# shellcheck disable=SC1094
-		source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-	fi
+# load the path files
+for file in ${(M)config_files:#*/path.zsh}
+do
+  source $file
+done
 
-	if [ -f "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-		# shellcheck disable=SC1094
-		source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-	fi
-	# shellcheck source=/dev/null
-	test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# load everything but the path and completion files
+for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
+do
+  source $file
+done
 
-	export PATH="/usr/local/sbin:$PATH"
-fi
+# initialize autocomplete here, otherwise functions won't be loaded
+autoload -U compinit
+compinit
 
-#### MacOS OS Check - END ####
+# load every completion after autocomplete loads
+for file in ${(M)config_files:#*/completion.zsh}
+do
+  source $file
+done
 
-#### Linux Hombrew
-if [[ $(uname) == "Linux" ]]; then
-	if [ -d /home/linuxbrew ]; then
-		test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-	fi
-fi
+unset config_files
 
-export PYENV_ROOT="$HOME/.pyenv"
-
-if [ ! -d "$PYENV_ROOT" ]; then
-	git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
-	git clone https://github.com/pyenv/pyenv-update.git "$PYENV_ROOT/plugins/pyenv-update"
-	git clone https://github.com/pyenv/pyenv-virtualenv.git "$PYENV_ROOT/plugins/pyenv-virtualenv"
-	export PATH="$PYENV_ROOT/bin:$PATH"
-	DEFAULT_PYTHON_VERSION=$(pyenv install --list | grep -v - | grep -v a | grep -v b | grep -v mini | grep -v rc | tail -1 | awk '{ print $1 }')
-	pyenv install "$DEFAULT_PYTHON_VERSION"
-	pyenv global "$DEFAULT_PYTHON_VERSION"
-	eval "$(pyenv init --path)"
-	eval "$(pyenv init -)"
-	pip install --upgrade pip pip-tools
-	pip-sync "$DOTFILES_DIR/requirements.txt"
-else
-	export PATH="$PYENV_ROOT/bin:$PATH"
-	eval "$(pyenv init --path)"
-	eval "$(pyenv init -)"
-fi
-
-# Capture existing VSCode extensions
-# Skip if running in WSL
-if [ -x "$(command -v code)" ] && [[ "$(uname -r)" != *"microsoft"* ]]; then
-	code --list-extensions >"$HOME"/.dotfiles/Code/extensions.list
-fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Enable kubectl auto completion
-if [[ -x "$(command -v kubectl)" ]]; then
-	source <(kubectl completion zsh)
-fi
+# Better history
+# Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
