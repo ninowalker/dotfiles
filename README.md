@@ -3,23 +3,13 @@
 A collection of my `.dotfiles` including a [setup](setup.sh) script. This script
 will setup all the things.
 
-## Build Status
-
-### GitHub Actions
-
-![Dotfiles Testing](https://github.com/mrlesmithjr/dotfiles/workflows/Dotfiles%20Testing/badge.svg)
-
-### Travis CI
-
-[![Build Status](https://travis-ci.org/mrlesmithjr/dotfiles.svg?branch=master)](https://travis-ci.org/mrlesmithjr/dotfiles)
-
 ## Usage
 
 ### Clone down to your `$HOME` folder
 
 ```bash
 cd ~
-git clone https://github.com/mrlesmithjr/dotfiles .dotfiles --recursive
+git clone https://github.com/ninowalker/dotfiles .dotfiles --recursive
 ```
 
 ### Setup
@@ -51,28 +41,6 @@ everything works as planned in all scenarios between `Linux` and `MacOS`.
 
 Make sure to reset the user and email. Or you'll be using mine.
 
-```bash
-git config --global user.name "Your_Name"
-git config --global user.email "Your_Name@example.org"
-```
-
-### .vimrc and .vim
-
-Some personal settings to make `vim` more pleasing on the eyes.
-
-- [VundleVim](https://github.com/VundleVim/Vundle.vim)
-
-## Some Example Plugins/bundles and etc
-
-- [pathogen](https://github.com/tpope/vim-pathogen) - Manage your
-  `runtimepath` with ease.
-- [vim-ansible-yaml](https://github.com/chase/vim-ansible-yaml) - Adds
-  additional syntax highlighting and fixes indentation for Ansible's dialect
-  of YAML.
-- [vim-jinja](https://github.com/lepture/vim-jinja) - Jinja bundle for `vim`
-- [vim-markdown](https://github.com/plasticboy/vim-markdown) - Markdown Vim
-  Mode
-
 ## Visual Studio Code Extensions
 
 You can find some VS Code extensions exported [here](Code/extensions.list) which
@@ -88,8 +56,6 @@ MIT
 
 ## Author Information
 
-Larry Smith Jr.
+Nino Walker
 
-- [@mrlesmithjr](https://www.twitter.com/mrlesmithjr)
-- [EverythingShouldBeVirtual](http://everythingshouldbevirtual.com)
-- [mrlesmithjr@gmail.com](mailto:mrlesmithjr@gmail.com)
+This is derivative work. See the license, and the original repository: <https://github.com/mrlesmithjr/dotfiles>

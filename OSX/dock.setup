@@ -1,0 +1,29 @@
+#!/bin/bash
+
+add_maybe() {
+    if [ -e "$1" ]; then
+        dockutil --no-restart --add "$1"        
+    fi
+}
+
+apps=(
+    Brave\ Browser
+    Visual\ Studio\ Code 
+    iTerm 
+    Obsidian 
+    Spotify 
+    Messages 
+    FaceTime 
+    zoom.us 
+    System\ Preferences
+)
+
+dockutil --no-restart --remove all
+
+for a in "${apps[@]}"; do
+    add_maybe "$HOME/Applications/$a.app"
+    add_maybe "/System/Applications/$a.app"
+    add_maybe "/Applications/$a.app"
+done
+
+killall Dock

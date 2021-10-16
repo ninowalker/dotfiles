@@ -35,8 +35,8 @@
     ~/.macos:
       path: .macos
       if: "[ `uname` = Darwin ]"
-    # ~/.p10k.zsh:
-    #   path: .p10k.zsh
+    ~/.p10k.zsh:
+      path: .p10k.zsh
     ~/.condarc:
       path: .condarc
     ~/.pylintrc:
