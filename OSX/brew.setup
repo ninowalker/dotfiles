@@ -7,6 +7,8 @@ brew upgrade
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
+# TODO switch to .list files
+
 packages=(
   dockutil
   htop
@@ -20,6 +22,7 @@ packages=(
   fzf
   awscli
   dive
+  ffmpeg
 )
 
 # Install packages
