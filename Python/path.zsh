@@ -5,8 +5,7 @@ export POETRY_VIRTUALENVS_IN_PROJECT=true
 export PYENV_ROOT="$HOME/.pyenv"
 
 export PATH="$PYENV_ROOT/bin:$PATH"
-which pyenv > /dev/null && eval "$(pyenv init --path)"
-which pyenv > /dev/null && eval "$(pyenv init -)"
+which pyenv > /dev/null && eval "$(pyenv init --path)" && eval "$(pyenv init -)"
 
 # if [ ! -d "$PYENV_ROOT" ]; then
 # 	git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
@@ -25,10 +24,3 @@ which pyenv > /dev/null && eval "$(pyenv init -)"
 # 	eval "$(pyenv init --path)"
 # 	eval "$(pyenv init -)"
 # fi
-
-
-# Enable kubectl auto completion
-if [[ -x "$(command -v kubectl)" ]]; then
-	source <(kubectl completion zsh)
-fi
-

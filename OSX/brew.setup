@@ -1,36 +1,21 @@
 #!/bin/bash
-# Install Homebrew
 
+# Install Homebrew
 test -e /usr/local/bin/brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew update
 brew upgrade
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-# TODO switch to .list files
-
-packages=(
-  dockutil
-  htop
-  iftop
-  openssl
-  git
-  python@3.9
-  wget
-  wifi-password
-  blueutil
-  fzf
-  awscli
-  dive
-  ffmpeg
-)
+packages="$(grep -v -f <(brew list --formulae | sort | perl -ne 'chomp; print "^$_\$\n"') "$HOME/.dotfiles/OSX/formulae.list")"
 
 # Install packages
-echo "Installing packages..."
-for p in "${packages[@]}"; do
-    brew list "$p" &> /dev/null || brew install "$p"
-done
-
+if [ -n "$packages" ]; then
+    echo "Installing formulae..."
+    for p in "${packages[@]}"; do
+        brew install "$p"
+    done
+fi
 # Wait a bit before moving on...
 sleep 1
 
@@ -38,33 +23,17 @@ sleep 1
 echo "Success! Basic brew packages are installed."
 
 # Install cask packages
+apps="$(grep -v -f <(brew list --casks | sort | perl -ne 'chomp; print "^$_\$\n"') "$HOME/.dotfiles/OSX/casks.list")"
 
-apps=(
-    spotify
-    brave-browser
-    visual-studio-code
-    iterm2
-    sourcetree
-    wavebox
-    docker
-    anaconda
-    zoom
-    raspberry-pi-imager
-    obsidian
-    google-drive
-    rar
-    # Quick Look Plugins (https://github.com/sindresorhus/quick-look-plugins)
-
-    qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook qlvideo
-)
-
-for c in "${apps[@]}"; do
-    brew list "homebrew/cask/$c" &> /dev/null || brew install --appdir="/Applications" "homebrew/cask/$c"
-done
-
+if [ -n "$apps" ]; then
+    echo "Installing casks..."
+    for c in "${apps[@]}"; do
+        brew install --appdir="/Applications" "homebrew/cask/$c"
+    done
+fi
 
 # Wait a bit before moving on...
 sleep 1
 
 # ...and then.
-echo "Success! Brew additional applications are installed."
+echo "Success! Brew casks are installed."

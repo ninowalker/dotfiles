@@ -1,11 +1,18 @@
 #!/bin/bash
 
+########
+#
+# Sets up the OSX Dock with all the preferred icons.
+#
+########
+
 add_maybe() {
     if [ -e "$1" ]; then
         dockutil --no-restart --add "$1"        
     fi
 }
 
+# TODO use .list
 apps=(
     Brave\ Browser
     Visual\ Studio\ Code 
