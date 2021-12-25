@@ -30,7 +30,7 @@ defaults write com.apple.dock largesize -int 54
 
 # iTerm2
 ## Specify the preferences directory
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$DOTFILES/iterm2_profile"
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$DOTFILES/OSX/iterm2_profile"
 ## Tell iTerm2 to use the custom preferences in the directory
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 ## Don’t display the annoying prompt when quitting iTerm2
@@ -41,7 +41,7 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 TERMINAL_THEME="Custom"
 CURRENT_TERMINAL_THEME="$(defaults read com.apple.Terminal 'Default Window Settings')"
 if [ "$CURRENT_TERMINAL_THEME" != "$TERMINAL_THEME" ]; then
-  open "$DOTFILES/macOS_Terminal_profile/$TERMINAL_THEME".terminal
+  open "$DOTFILES/OSX/macOS_Terminal_profile/$TERMINAL_THEME".terminal
   defaults write com.apple.terminal 'Default Window Settings' -string "$TERMINAL_THEME"
   defaults write com.apple.terminal 'Startup Window Settings' -string "$TERMINAL_THEME"
 fi

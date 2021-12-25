@@ -6,14 +6,14 @@ if [[ $(uname) == "Linux" ]]; then
 	# Arch
 	if [ -f /etc/arch-release ]; then
 		codename="$(awk </etc/arch-release '{print $1}')"
-		if [[ $codename == "Manjaro" ]]; then
-			yes | sudo pacman -Syyu && yes | sudo pacman -S gc guile autoconf automake \
-				binutils bison curl fakeroot file findutils flex gawk gcc gettext grep \
-				groff gzip libtool m4 make pacman patch pkgconf sed sudo systemd \
-				texinfo util-linux which python-setuptools python-virtualenv python-pip \
-				python-pyopenssl python2-setuptools python2-virtualenv python2-pip \
-				python2-pyopenssl
-		fi
+		# if [[ $codename == "Manjaro" ]]; then
+		# 	yes | sudo pacman -Syyu && yes | sudo pacman -S gc guile autoconf automake \
+		# 		binutils bison curl fakeroot file findutils flex gawk gcc gettext grep \
+		# 		groff gzip libtool m4 make pacman patch pkgconf sed sudo systemd \
+		# 		texinfo util-linux which python-setuptools python-virtualenv python-pip \
+		# 		python-pyopenssl python2-setuptools python2-virtualenv python2-pip \
+		# 		python2-pyopenssl
+		# fi
 	fi
 
 	# Ubuntu
@@ -23,7 +23,7 @@ if [[ $(uname) == "Linux" ]]; then
 		os_version_id=$VERSION_ID
 		sudo apt-get update
 		sudo apt-get install -y bc
-		if (($(echo $os_version_id '<' 20.04 | bc))); then
+		if (($(echo "$os_version_id" '<' 20.04 | bc))); then
 			sudo apt-get -y install build-essential curl fontconfig libbz2-dev libffi-dev \
 				libreadline-dev libsqlite3-dev libssl-dev python-dev python-minimal python-pip \
 				python-setuptools python-virtualenv python3-pip python3-venv vim virtualenv zlib1g-dev zsh
@@ -129,10 +129,11 @@ if [[ ! -d "$FONTS_DIR" ]]; then
 fi
 
 if [[ ! -f "$FONTS_DIR/MesloLGS NF Regular.ttf" ]]; then
+	(
 	cd "$FONTS_DIR"
 	curl -L https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf >"MesloLGS NF Regular.ttf"
 	if [[ $(uname) == "Linux" ]]; then
 		fc-cache -vf "$FONTS_DIR"
 	fi
-	cd -
+	)
 fi

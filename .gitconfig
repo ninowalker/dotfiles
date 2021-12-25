@@ -35,9 +35,7 @@
 	tool = default-difftool
 [difftool "default-difftool"]
 	cmd = code --wait --diff $LOCAL $REMOTE
-[includeIf "gitdir:~/Git_Projects/Work/"]
-	path = ~/.gitconfig-work
-[includeIf "gitdir:~/projects/devops_automation/"]
+[includeIf "gitdir:~/dev/"]
 	path = ~/.gitconfig-work
 [status]
 	submoduleSummary = true

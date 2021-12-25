@@ -6,6 +6,7 @@
 
 - create:
     - ~/dev
+    - ~/projects
 
 - link:
     # ~/.atom:
@@ -32,7 +33,7 @@
       path: .gitignore_global
     ~/.hyper.js:
       path: .hyper.js
-    ~/.macos:
+    ~/OSX/.macos:
       path: .macos
       if: "[ `uname` = Darwin ]"
     ~/.p10k.zsh:
@@ -41,8 +42,6 @@
       path: .condarc
     ~/.pylintrc:
       path: .pylintrc
-    # ~/.rubocop.yml:
-    #   path: .rubocop.yml
     ~/.tmux.conf:
       path: .tmux.conf
     ~/.vim:
