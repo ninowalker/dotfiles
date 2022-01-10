@@ -9,14 +9,20 @@
     - ~/projects
 
 - link:
-    # ~/.atom:
-    #   path: .atom
+    ~/.ssh/:
+      create: true
+      glob: true
+      path: ssh/*
     ~/.bash_profile:
       path: .bash_profile
       force: true
     ~/.bashrc:
       path: .bashrc
       force: true
+    ~/.aws/:
+      create: true
+      glob: true
+      path: .aws/*
     ~/.config/Code/User/:
       create: true
       exclude: [Code/snippets]
@@ -38,16 +44,17 @@
       if: "[ `uname` = Darwin ]"
     ~/.p10k.zsh:
       path: .p10k.zsh
+      force: true
     ~/.condarc:
       path: .condarc
     ~/.pylintrc:
       path: .pylintrc
     ~/.tmux.conf:
       path: .tmux.conf
-    ~/.vim:
-      path: .vim
-    ~/.vimrc:
-      path: .vimrc
+    # ~/.vim:
+    #   path: .vim
+    # ~/.vimrc:
+    #   path: .vimrc
     ~/.yamllint.yml:
       path: .yamllint.yml
     ~/.zshrc:
@@ -82,9 +89,12 @@
       description: Installing oh-my-zsh
     - command: if [[ ! -d "$HOME"/powerlevel10k ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/powerlevel10k; fi
       description: Installing Powerlevel10k
-    - command: vim +BundleInstall +qall 2 &>/dev/null
-      description: Installing VIM bundles
     - command: if [[ $(uname) == "Darwin" ]]; then source $HOME/.macos; fi
       description: Setting up macOS
     - command: if [[ "$(echo $0)" != *"zsh"* ]]; then if [[ $(uname) == "Linux" ]]; then USER="$(whoami)" sudo usermod --shell /bin/zsh "$USER"; else chsh -s "$(which zsh)"; fi; fi
       description: Changing shell to ZSH
+    - command: if [[ ! -f "$HOME"/.ssh/id_rsa ]]; then mkdir -p "$HOME"/.ssh && ssh-keygen ; fi
+      description: create a key if not present
+      stdout: true
+      stderr: true
+      stdin: true
