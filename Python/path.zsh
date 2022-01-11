@@ -4,9 +4,10 @@
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export PYENV_ROOT="$HOME/.pyenv"
 
-export PATH="$PYENV_ROOT/bin:$PATH"
-which pyenv > /dev/null && eval "$(pyenv init --path)" && eval "$(pyenv init -)"
-
+ipyenv() {
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    which pyenv > /dev/null && eval "$(pyenv init --path)" && eval "$(pyenv init -)"
+}
 # if [ ! -d "$PYENV_ROOT" ]; then
 # 	git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
 # 	git clone https://github.com/pyenv/pyenv-update.git "$PYENV_ROOT/plugins/pyenv-update"
