@@ -1,18 +1,20 @@
 #!/bin/bash
 
 # Install Homebrew
-test -e /usr/local/bin/brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+test -e /opt/homebrew/bin/brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+PATH="/opt/homebrew/bin:$PATH"
 brew update
 brew upgrade
 
 export HOMEBREW_NO_AUTO_UPDATE=1
 
-packages="$(grep -v -f <(brew list --formulae | sort | perl -ne 'chomp; print "^$_\$\n"') "$HOME/.dotfiles/OSX/formulae.list")"
+packages=($(grep -v -f <(brew list --formulae | sort | perl -ne 'chomp; print "^$_\$\n"') "$HOME/.dotfiles/OSX/formulae.list"))
 
 # Install packages
 if [ -n "$packages" ]; then
     echo "Installing formulae..."
     for p in "${packages[@]}"; do
+        echo "installing $p..."
         brew install "$p"
     done
 fi

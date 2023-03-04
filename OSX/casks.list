@@ -1,5 +1,3 @@
-anaconda
-autodesk-fusion360
 brave-browser
 docker
 expressvpn
@@ -9,7 +7,6 @@ google-drive-file-stream
 google-chrome
 iterm2
 obsidian
-pycharm-with-anaconda-plugin
 qlcolorcode
 qlimagesize
 qlmarkdown
@@ -19,16 +16,12 @@ qlvideo
 quicklook-csv
 quicklook-json
 rar
-raspberry-pi-imager
 sourcetree
 spotify
 visual-studio-code
 vlc
-wavebox
 webpquicklook
 zoom
 lastpass
-osxfuse
-vagrant
-virtualbox
 vlc
+intellij-idea
