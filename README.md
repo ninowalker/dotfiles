@@ -50,6 +50,12 @@ you can easily import if you would like by executing the following:
 cat $HOME/.dotfiles/Code/extensions.list | xargs -L1 code --install-extension
 ```
 
+## Fonts
+
+https://www.nerdfonts.com/font-downloads - Fira Nerd Code
+
+https://github.com/agnoster/agnoster-zsh-theme/issues/23
+
 ## License
 
 MIT

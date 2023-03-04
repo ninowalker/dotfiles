@@ -1,0 +1,5 @@
+# git config --global include.path
+
+[credential]
+# Ubuntu
+helper = cache

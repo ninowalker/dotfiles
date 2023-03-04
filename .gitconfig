@@ -1,78 +1,80 @@
 [apply]
 # Detect whitespace errors when applying a patch
-	whitespace = fix
+whitespace = fix
 [core]
-	excludesfile = ~/.gitignore_global
+excludesfile = ~/.gitignore_global
 # editor = atom --wait
-	editor = code --wait
+editor = code --wait
 # editor = vi
-	# editor = vim
+# editor = vim
 # Treat spaces before tabs and all kinds of trailing whitespace as an error
 # [default] trailing-space: looks for spaces at the end of a line
 # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 [user]
-	email = nino.walker@gmail.com
-	name = Nino Walker
-[credential]
-# MacOS
-	helper = osxkeychain
-# Ubuntu
-# helper = cache
-	useHttpPath = true
+email = nino.walker@gmail.com
+name = Nino Walker
 [color]
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
+status = auto
+branch = auto
+interactive = auto
+diff = auto
 [color]
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
-	ui = auto
+status = auto
+branch = auto
+interactive = auto
+diff = auto
+ui = auto
 [diff]
-	tool = default-difftool
+tool = default-difftool
 [difftool "default-difftool"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-[includeIf "gitdir:~/dev/"]
-	path = ~/.gitconfig-work
+cmd = code --wait --diff $LOCAL $REMOTE
+
 [status]
-	submoduleSummary = true
-	showUntrackedFiles = all
+submoduleSummary = true
+showUntrackedFiles = all
+
 [pager]
-	branch = false
+branch = false
 # [url "git@github.com:"]
 #  	insteadOf = https://github.com/
 # [url "git@gitlab.com:"]
 #  	insteadOf = https://gitlab.com/
 [fetch]
-	prune = true
+prune = true
 [branch "main"]
-	mergeOptions = --no-ff
+mergeOptions = --no-ff
 [branch "master"]
-	mergeOptions = --no-ff
+mergeOptions = --no-ff
 [pull]
-	rebase = true
+rebase = true
 [rebase]
-	autoStash = true
+autoStash = true
 [push]
-	followTags = true
-	default = current
+followTags = true
+default = current
+
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+current = yellow reverse
+local = yellow
+remote = green
+
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+added = yellow
+changed = green
+untracked = cyan
+
 [init]
-	defaultBranch = main
+defaultBranch = main
+
 [alias]
-	trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
+trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
+pr = !git push origin $(git rev-parse --abbrev-ref HEAD)
+dir = !git ls-files | grep "/" | perl -pe 's%^(.+/).*%\\1%' | sort -r | uniq | fzf
+s = status
+
 [filter "lfs"]
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process

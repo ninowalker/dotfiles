@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
-# .zshrc is for interactive shell configuration. 
+# .zshrc is for interactive shell configuration.
 
 export ZSH=$HOME/.oh-my-zsh
 
@@ -25,8 +25,9 @@ source "$ZSH"/oh-my-zsh.sh
 export ZSH=$HOME/.dotfiles
 
 # all of our zsh files
+setopt nullglob
 typeset -U config_files
-config_files=($ZSH/**/*.zsh $HOME/.*.dotfiles/**/*.zsh)
+config_files=($ZSH/**/*.zsh $HOME/.*.dotfiles/**/*.zsh(N))
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}

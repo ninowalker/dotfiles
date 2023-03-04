@@ -27,6 +27,8 @@
     "git.confirmSync": false,
     "window.autoDetectColorScheme": true,
     "redhat.telemetry.enabled": false,
-    "workbench.colorTheme": "Default Light+",
-    "window.zoomLevel": 1
+    "tabnine.experimentalAutoImports": true,
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    }
 }

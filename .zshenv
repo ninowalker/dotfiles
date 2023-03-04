@@ -1,6 +1,6 @@
 # https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
 
-# .zshenv is always sourced, it often contains exported variables that should be available to other programs. 
+# .zshenv is always sourced, it often contains exported variables that should be available to other programs.
 # For example, $PATH, $EDITOR, and $PAGER are often set in .zshenv
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
@@ -13,8 +13,9 @@ then
   source ~/.localrc
 fi
 
+setopt nullglob
 typeset -U dot_config_files
-dot_config_files=($ZSH/**/env.zsh $HOME/.*.dotfiles/**/env.zsh)
+dot_config_files=($ZSH/**/env.zsh $HOME/.*.dotfiles/**/env.zsh(N))
 
 # load the path files
 for file in ${(M)dot_config_files}
