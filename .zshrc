@@ -21,12 +21,12 @@ ZSH_DISABLE_COMPFIX="true"
 source "$ZSH"/oh-my-zsh.sh
 
 # your project folder that we can `c [tab]` to
-# export PROJECTS=~/Documents/Code
+# export PROJECTS=~/dev/platform
 export ZSH=$HOME/.dotfiles
 
 # all of our zsh files
 typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+config_files=($ZSH/**/*.zsh $HOME/.*.dotfiles/**/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}

@@ -14,7 +14,7 @@ then
 fi
 
 typeset -U dot_config_files
-dot_config_files=($ZSH/**/env.zsh)
+dot_config_files=($ZSH/**/env.zsh $HOME/.*.dotfiles/**/env.zsh)
 
 # load the path files
 for file in ${(M)dot_config_files}

@@ -69,3 +69,10 @@
 	untracked = cyan
 [init]
 	defaultBranch = main
+[alias]
+	trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

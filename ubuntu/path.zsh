@@ -16,3 +16,7 @@ _do_snapshot apt-mark "$HOME"/.dotfiles/ubuntu/packages.list && \
     comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u) > "$HOME"/.dotfiles/ubuntu/packages.list
 
 unset -f _do_snapshot
+
+# https://garywoodfine.com/use-pbcopy-on-ubuntu/
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
