@@ -15,8 +15,7 @@ fi
 
 setopt nullglob
 typeset -U dot_config_files
-dot_config_files=($ZSH/**/env.zsh $HOME/.*.dotfiles/**/env.zsh(N))
-
+dot_config_files=($ZSH/**/env.zsh(on) $HOME/.*.dotfiles/**/env.zsh(Non))
 # load the path files
 for file in ${(M)dot_config_files}
 do

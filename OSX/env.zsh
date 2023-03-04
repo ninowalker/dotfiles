@@ -1,9 +1,5 @@
 if [[ $(uname -s) == "Darwin" ]]; then
-    if ! which brew >/dev/null; then
-        if [[ -e /opt/homebrew/bin/brew ]]; then
-            export PATH="/opt/homebrew/bin:$PATH"
-        fi
-    fi
+    add_to_path -p /opt/homebrew/bin
 
     if [[ ! -L /Library/Java/JavaVirtualMachines/openjdk.jdk ]] && [[ -d /usr/local/opt/openjdk/libexec/openjdk.jdk ]]; then
         ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
