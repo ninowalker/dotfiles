@@ -155,3 +155,8 @@ fi
 if [[ -x "$(command -v kubectl)" ]]; then
 	source <(kubectl completion bash)
 fi
+
+# . "$HOME/.grit/bin/env"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/rfc/.cache/lm-studio/bin"

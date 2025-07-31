@@ -101,7 +101,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/
 lib64/
 parts/
 sdist/
@@ -194,9 +194,9 @@ celerybeat.pid
 # Environments
 .env
 .venv
-env/
+xenv/
 venv/
-ENV/
+xENV/
 env.bak/
 venv.bak/
 
@@ -284,3 +284,6 @@ terraform.rc
 # Ignore all local history of files
 .history
 .ionide
+
+# Local make file
+.m.mk

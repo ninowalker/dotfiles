@@ -1,13 +1,38 @@
 // Place your key bindings in this file to override the defaults
 [
-    {
-        "key": "ctrl+enter",
-        "command": "editor.action.quickFix",
-        "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  {
+    "key": "ctrl+enter",
+    "command": "editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "meta+.",
+    "command": "-editor.action.quickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "cmd+k shift+cmd+W",
+    "command": "jupyter.restartkernelandrunallcells"
+  },
+  {
+    "command": "runCommands",
+    "key": "cmd+k shift+cmd+r",
+    "args": {
+      "commands": [
+        "notebook.clearAllCellsOutputs",
+        "jupyter.restartkernel",
+        "jupyter.notebookeditor.runallcells",
+        "notebook.revealLastFailedCell"
+      ]
     },
-    {
-        "key": "meta+.",
-        "command": "-editor.action.quickFix",
-        "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
-    }
+    "when": "editorTextFocus" // can use context keys
+  },
+  {
+    "key": "cmd+k shift+cmd+h",
+    "command": "jupyter.restartkernelandrunuptoselectedcell"
+  },
+  {
+    "key": "cmd+k shift+cmd+l",
+    "command": "notebook.clearAllCellsOutputs"
+  }
 ]

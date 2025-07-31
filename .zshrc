@@ -64,3 +64,11 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+. "$HOME/.grit/bin/env"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/rfc/.cache/lm-studio/bin"
+
+# Added by Windsurf
+export PATH="/Users/rfc/.codeium/windsurf/bin:$PATH"

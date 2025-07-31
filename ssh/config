@@ -1,3 +1,6 @@
+Host pi
+    User future
+    HostName 192.168.1.44
 
 Host github.com
     User git

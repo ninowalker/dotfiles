@@ -70,8 +70,9 @@ defaultBranch = main
 [alias]
 trash = !mkdir -p .trash && git ls-files --others --exclude-standard | xargs mv -f -t .trash
 pr = !git push origin $(git rev-parse --abbrev-ref HEAD)
-dir = !git ls-files | grep "/" | perl -pe 's%^(.+/).*%\\1%' | sort -r | uniq | fzf
+dir = !git ls-files | grep "/" | perl -pe 's%^(.+/).*%\\1%' | sort -r | uniq | fzf --height=20%
 s = status
+set-upstream = "!f() { git branch --set-upstream-to=origin/$1 $(git rev-parse --abbrev-ref HEAD); }; f"
 
 [filter "lfs"]
 required = true

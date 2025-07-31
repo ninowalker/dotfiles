@@ -1,34 +1,192 @@
 {
-    "editor.cursorStyle": "block",
-    "editor.fontFamily": "'MesloLGS NF'",
-    "editor.fontLigatures": true,
-    "editor.fontSize": 18,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.rulers": [
-        88,
-        120
-    ],
-    "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.pylintEnabled": false,
-    "python.linting.enabled": true,
-    "python.formatting.provider": "black",
-    "workbench.editorAssociations": {
-        "*.ipynb": "jupyter.notebook.ipynb"
-    },
-    "workbench.startupEditor": "none",
-    "terminal.integrated.fontSize": 14,
-    "telemetry.enableTelemetry": false,
-    "python.showStartPage": false,
-    "docker.showStartPage": false,
-    "githubIssues.issueBranchTitle": "${user}/issue${issueNumber}_${sanitizedIssueTitle}",
-    "git.confirmSync": false,
-    "window.autoDetectColorScheme": true,
-    "redhat.telemetry.enabled": false,
-    "tabnine.experimentalAutoImports": true,
-    "[shellscript]": {
-        "editor.defaultFormatter": "foxundermoon.shell-format"
+  "editor.cursorStyle": "block",
+  "editor.fontFamily": "'FiraCode NF'",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 16,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.rulers": [88, 120],
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "scm.defaultViewMode": "tree",
+  "git.openDiffOnClick": false,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb",
+    "*.pdf": "default"
+  },
+  "jestrunner.jestCommand": "pnpm test --",
+  "jestrunner.debugOptions": {
+    "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/react-scripts",
+    "runtimeArgs": [
+      "test",
+      "${fileBasename}",
+      "--runInBand",
+      "--no-cache",
+      "--watchAll=false",
+      "--color"
+    ]
+  },
+  "workbench.startupEditor": "none",
+  "terminal.integrated.fontSize": 14,
+  "telemetry.telemetryLevel": "off",
+  "git.confirmSync": false,
+  "window.autoDetectColorScheme": true,
+  "redhat.telemetry.enabled": false,
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "editor.minimap.enabled": false,
+  "jupyter.askForKernelRestart": false,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "json.schemaDownload.enable": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["nfpm.yaml"],
+      "url": "https://nfpm.goreleaser.com/schema.json"
     }
+  ],
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "genieai.personalizedName": "Yo",
+  "java.autobuild.enabled": false,
+  "java.import.maven.enabled": false,
+  "java.import.maven.offline.enabled": true,
+  "evenBetterToml.schema.associations": {
+    // ".*.box.toml": "./rapidbox/src/main/resources/toml-schema.json"
+  },
+  "evenBetterToml.taplo.environment": {
+    "RUST_LOG": "trace"
+  },
+  "evenBetterToml.taplo.extraArgs": [
+    "--log-spans",
+    "--verbose",
+    "--cache-path",
+    "/Users/rfc/.taplo/cache"
+  ],
+  "git.autofetch": true,
+  "[toml]": {
+    "editor.renderWhitespace": "all",
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "[typescript]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "prettier.bracketSpacing": false
+  },
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+  "npm.packageManager": "yarn",
+  "python.analysis.autoFormatStrings": true,
+  "python.linting.mypyCategorySeverity.error": "Warning",
+  "python.languageServer": "Pylance",
+  "rapidbox.testing.hostName": "rapidbox-boring-rosalind-4",
+  "rapidbox.testing.localUser": "nino",
+  "markdown-preview-enhanced.plantumlServer": "http://localhost:9999",
+  "markdown-preview-enhanced.previewTheme": "atom-light.css",
+  "python.testing.pytestArgs": ["-vv"],
+  "yaml.customTags": [
+    "!And",
+    "!And sequence",
+    "!If",
+    "!If sequence",
+    "!Not",
+    "!Not sequence",
+    "!Equals",
+    "!Equals sequence",
+    "!Or",
+    "!Or sequence",
+    "!FindInMap",
+    "!FindInMap sequence",
+    "!Base64",
+    "!Join",
+    "!Join sequence",
+    "!Cidr",
+    "!Ref",
+    "!Sub",
+    "!Sub sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!ImportValue sequence",
+    "!Select",
+    "!Select sequence",
+    "!Split",
+    "!Split sequence"
+  ],
+  "workbench.colorTheme": "Default Light Modern",
+  "mypy.dmypyExecutable": "~/.local/bin/dmypy",
+  "isort.interpreter": ["/Users/rfc/.local/pipx/venvs/isort/bin/python"],
+  "genieai.openai.model": "gpt-3.5-turbo-0301",
+  "genieai.enableConversationHistory": true,
+  "python.testing.pytestEnabled": true,
+  "black-formatter.interpreter": [
+    "/Users/rfc/.local/pipx/venvs/black/bin/python"
+  ],
+  "black-formatter.showNotifications": "onError",
+  "chatgpt.lang": "en",
+  "mypy-type-checker.importStrategy": "fromEnvironment",
+  "genieai.promptPrefix.addTests": "Implement tests for the following code using pytest",
+  "terminal.integrated.inheritEnv": false,
+  "tabnine.experimentalAutoImports": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.accessibilitySupport": "off",
+  "python.defaultInterpreterPath": "/Users/rfc/miniforge3",
+  "explorer.confirmDelete": false,
+  "typescript.npm": "/opt/homebrew/bin/pnpm",
+  "git.openRepositoryInParentFolders": "never",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.renderSideBySide": false,
+  "gitTreeCompare.diffMode": "full",
+  "gitlens.currentLine.enabled": false,
+  "gitlens.codeLens.enabled": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.db": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.s3db": "${capture}.${extname}-*"
+  },
+  "git.suggestSmartCommit": false,
+  "[xml]": {
+    "editor.defaultFormatter": "mikeburgh.xml-format"
+  },
+  "gitlens.rebaseEditor.ordering": "asc",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "githubPullRequests.pullBranch": "never",
+  "gitlens.views.commitDetails.files.layout": "tree",
+  "hurl-runner.commandLineArguments": "-i --error-format long --file-root \"$(pwd)\" --variable \"host=http://localhost:4320\"",
+  "chat.commandCenter.enabled": false,
+  "isort.serverEnabled": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "black-formatter.serverTransport": "pipe",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.analysis.typeCheckingMode": "standard"
 }
