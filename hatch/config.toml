@@ -1,0 +1,43 @@
+mode = "local"
+project = ""
+shell = ""
+
+[dirs]
+project = []
+python = "isolated"
+data = "$HOME/Library/Application Support/hatch"
+cache = "$HOME/Library/Caches/hatch"
+
+[dirs.env]
+# See Python/devcache.zsh. Expanded by hatch via os.path.expandvars, so it
+# uses $HOME (always set) rather than $DEV_CACHE (set only by our zsh env).
+virtual = "$HOME/Library/Caches/dev/hatch"
+
+[projects]
+
+[publish.index]
+repo = "main"
+
+[template]
+name = "nino-robotfutures-co"
+email = "nino@robotfutures.co"
+
+[template.licenses]
+headers = true
+default = [
+    "MIT",
+]
+
+[template.plugins.default]
+tests = true
+ci = false
+src-layout = true
+
+[terminal.styles]
+info = "bold"
+success = "bold cyan"
+error = "bold red"
+warning = "bold yellow"
+waiting = "bold magenta"
+debug = "bold"
+spinner = "simpleDotsScrolling"

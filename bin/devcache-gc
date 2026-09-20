@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+"""Remove hatch environments whose project directory no longer exists.
+
+hatch stores each environment under <dirs.env.virtual>/<project>/<id>/<env>, where
+<id> is the first 8 characters of urlsafe-base64(sha256(project_path.casefold())).
+Nothing records the original path, so a worktree that gets deleted leaves its
+environments behind with no way to attribute them.
+
+This recomputes that id for every project directory under the configured search
+roots and deletes the environment directories that match none of them.
+
+  devcache-gc            report only
+  devcache-gc --delete   remove the orphans
+  devcache-gc --roots ~/dev ~/src
+"""
+
+from __future__ import annotations
+
+import argparse
+import base64
+import hashlib
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+DEFAULT_ROOTS = ["~/dev", "~/.claude-maestro/worktrees", "~/projects"]
+MAX_DEPTH = 4
+
+
+def project_id(path: Path) -> str:
+    key = str(path).casefold() if sys.platform in ("darwin", "win32") else str(path)
+    return base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest()).decode()[:8]
+
+
+def env_root() -> Path:
+    dev_cache = os.environ.get("DEV_CACHE")
+    if dev_cache:
+        return Path(dev_cache).expanduser() / "hatch"
+    return Path.home() / "Library" / "Application Support" / "hatch" / "env" / "virtual"
+
+
+def collect(roots: list[Path]) -> dict[str, Path]:
+    found: dict[str, Path] = {}
+    for root in roots:
+        if not root.is_dir():
+            continue
+        for depth in range(MAX_DEPTH):
+            pattern = "/".join(["*"] * depth + ["pyproject.toml"]) if depth else "pyproject.toml"
+            for marker in root.glob(pattern):
+                d = marker.parent
+                found[project_id(d)] = d
+        # git worktrees can sit outside the search roots
+        for gitdir in list(root.glob("*/.git")) + list(root.glob(".git")):
+            out = subprocess.run(
+                ["git", "-C", str(gitdir.parent), "worktree", "list", "--porcelain"],
+                capture_output=True, text=True,
+            ).stdout
+            for line in out.splitlines():
+                if not line.startswith("worktree "):
+                    continue
+                wt = Path(line.split(" ", 1)[1])
+                if not wt.is_dir():
+                    continue
+                found[project_id(wt)] = wt
+                for marker in list(wt.glob("*/pyproject.toml")) + list(wt.glob("*/*/pyproject.toml")):
+                    found[project_id(marker.parent)] = marker.parent
+    return found
+
+
+def size_mb(path: Path) -> float:
+    out = subprocess.run(["du", "-sk", str(path)], capture_output=True, text=True).stdout
+    return int(out.split()[0]) / 1024 if out.strip() else 0.0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--delete", action="store_true", help="remove the orphans instead of reporting")
+    ap.add_argument("--roots", nargs="*", default=DEFAULT_ROOTS, help="where projects live")
+    args = ap.parse_args()
+
+    base = env_root()
+    if not base.is_dir():
+        print(f"no hatch environments at {base}")
+        return 0
+
+    roots = [Path(r).expanduser() for r in args.roots]
+    known = collect(roots)
+    print(f"{len(known)} live project paths under {', '.join(str(r) for r in roots)}")
+
+    orphans, kept_mb, orphan_mb = [], 0.0, 0.0
+    for project in sorted(base.iterdir()):
+        if not project.is_dir():
+            continue
+        for env in sorted(project.iterdir()):
+            if not env.is_dir() or env.name.startswith("."):
+                continue
+            mb = size_mb(env)
+            if env.name in known:
+                kept_mb += mb
+            else:
+                orphan_mb += mb
+                orphans.append((mb, env))
+
+    print(f"in use : {kept_mb / 1024:6.2f} GB")
+    print(f"orphans: {orphan_mb / 1024:6.2f} GB across {len(orphans)} directories")
+    for mb, env in sorted(orphans, reverse=True)[:20]:
+        print(f"  {mb / 1024:6.2f} GB  {env.parent.name}/{env.name}")
+    if len(orphans) > 20:
+        print(f"  ... and {len(orphans) - 20} more")
+
+    if not orphans:
+        return 0
+    if not args.delete:
+        print("\nre-run with --delete to remove them")
+        return 0
+
+    for _, env in orphans:
+        shutil.rmtree(env, ignore_errors=True)
+    print(f"\ndeleted {len(orphans)} directories, {orphan_mb / 1024:.2f} GB")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -35,6 +35,11 @@
     ~/.gitconfig:
       path: .gitconfig
       force: true
+    ~/Library/Application Support/hatch/config.toml:
+      create: true
+      path: hatch/config.toml
+      force: true
+      if: "[ `uname` = Darwin ]"
     ~/.gitignore_global:
       path: .gitignore_global
     ~/.hyper.js:
