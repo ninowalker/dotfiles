@@ -55,9 +55,16 @@ hardlinked to each other, so the cost is paid twice.
 Both are redirected under `~/Library/Caches/dev`, which Time Machine skips and macOS can
 reclaim as purgeable space:
 
-- uv, via `UV_CACHE_DIR` in [Python/devcache.zsh](Python/devcache.zsh).
+- uv, via `UV_CACHE_DIR` in [Python/env.zsh](Python/env.zsh) and, for processes that never
+  source a zsh profile, `cache-dir` in `~/.config/uv/uv.toml`. That file is generated at
+  install time rather than tracked, because uv expands neither `~` nor `$HOME` inside it.
 - hatch, via `dirs.env.virtual` in [hatch/config.toml](hatch/config.toml), linked into place
-  by dotbot. hatch has no environment variable for that setting.
+  by dotbot. hatch has no environment variable for that setting, and no global config field
+  for the installer either, so the uv switch below has to be an environment variable.
+
+The variables live in `env.zsh` rather than any other `*.zsh` on purpose: `.zshenv` sources
+`$ZSH/**/env.zsh`, so they reach every zsh, while `.zshrc`'s glob would only reach interactive
+ones and leave scripts, just recipes and editor tasks building in the default locations.
 
 `devcache` inspects and clears it: `devcache size`, `devcache prune` (drops only unreferenced
 uv entries), `devcache purge` (deletes everything; it all rebuilds on demand).

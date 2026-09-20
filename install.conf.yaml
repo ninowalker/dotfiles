@@ -90,6 +90,8 @@
       description: Installing bash-git-prompt
     - command: if [ ! -f "$HOME/.netrc" ]; then touch "$HOME/.netrc"; fi
       description: Creating $HOME/.netrc
+    - command: mkdir -p "$HOME/.config/uv" && printf 'cache-dir = "%s/Library/Caches/dev/uv"\n' "$HOME" > "$HOME/.config/uv/uv.toml"
+      description: Pointing the uv cache at ~/Library/Caches/dev (uv.toml expands neither ~ nor $HOME, so it is generated)
     - command: if [[ ! -d "$HOME"/.oh-my-zsh ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME"/.oh-my-zsh; fi
       description: Installing oh-my-zsh
     - command: if [[ ! -d "$HOME"/powerlevel10k ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/powerlevel10k; fi
