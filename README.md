@@ -41,6 +41,11 @@ everything works as planned in all scenarios between `Linux` and `MacOS`.
 
 Make sure to reset the user and email. Or you'll be using mine.
 
+### launchd
+
+Notes on finding and disabling macOS background agents and daemons, plus a log of what is
+disabled on my machines, are in [OSX/launchd.md](OSX/launchd.md).
+
 ## Visual Studio Code Extensions
 
 You can find some VS Code extensions exported [here](Code/extensions.list) which
