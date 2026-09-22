@@ -6,7 +6,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
   },
   "editor.rulers": [88, 120],
   "files.insertFinalNewline": true,
@@ -15,7 +15,7 @@
   "git.openDiffOnClick": false,
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter.notebook.ipynb",
-    "*.pdf": "default"
+    "*.pdf": "default",
   },
   "jestrunner.jestCommand": "pnpm test --",
   "jestrunner.debugOptions": {
@@ -26,38 +26,37 @@
       "--runInBand",
       "--no-cache",
       "--watchAll=false",
-      "--color"
-    ]
+      "--color",
+    ],
   },
   "workbench.startupEditor": "none",
   "terminal.integrated.fontSize": 14,
   "telemetry.telemetryLevel": "off",
   "git.confirmSync": false,
-  "window.autoDetectColorScheme": true,
   "redhat.telemetry.enabled": false,
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+    "editor.defaultFormatter": "foxundermoon.shell-format",
   },
   "editor.minimap.enabled": false,
   "jupyter.askForKernelRestart": false,
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "vscode.json-language-features",
   },
   "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker",
   },
   "json.schemaDownload.enable": true,
   "json.schemas": [
     {
       "fileMatch": ["nfpm.yaml"],
-      "url": "https://nfpm.goreleaser.com/schema.json"
-    }
+      "url": "https://nfpm.goreleaser.com/schema.json",
+    },
   ],
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[dockercompose]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "genieai.personalizedName": "Yo",
   "java.autobuild.enabled": false,
@@ -67,25 +66,25 @@
     // ".*.box.toml": "./rapidbox/src/main/resources/toml-schema.json"
   },
   "evenBetterToml.taplo.environment": {
-    "RUST_LOG": "trace"
+    "RUST_LOG": "trace",
   },
   "evenBetterToml.taplo.extraArgs": [
     "--log-spans",
     "--verbose",
     "--cache-path",
-    "/Users/rfc/.taplo/cache"
+    "/Users/rfc/.taplo/cache",
   ],
   "git.autofetch": true,
   "[toml]": {
     "editor.renderWhitespace": "all",
-    "editor.defaultFormatter": "tamasfe.even-better-toml"
+    "editor.defaultFormatter": "tamasfe.even-better-toml",
   },
   "[typescript]": {
     // "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
-    "prettier.bracketSpacing": false
+    "prettier.bracketSpacing": false,
   },
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
   "npm.packageManager": "yarn",
@@ -124,16 +123,16 @@
     "!Select",
     "!Select sequence",
     "!Split",
-    "!Split sequence"
+    "!Split sequence",
   ],
-  "workbench.colorTheme": "Default Light Modern",
+  "workbench.colorTheme": "Darcula Theme from IntelliJ",
   "mypy.dmypyExecutable": "~/.local/bin/dmypy",
   "isort.interpreter": ["/Users/rfc/.local/pipx/venvs/isort/bin/python"],
   "genieai.openai.model": "gpt-3.5-turbo-0301",
   "genieai.enableConversationHistory": true,
   "python.testing.pytestEnabled": true,
   "black-formatter.interpreter": [
-    "/Users/rfc/.local/pipx/venvs/black/bin/python"
+    "/Users/rfc/.local/pipx/venvs/black/bin/python",
   ],
   "black-formatter.showNotifications": "onError",
   "chatgpt.lang": "en",
@@ -142,10 +141,10 @@
   "terminal.integrated.inheritEnv": false,
   "tabnine.experimentalAutoImports": true,
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "editor.accessibilitySupport": "off",
-  "python.defaultInterpreterPath": "/Users/rfc/miniforge3",
+  "python.defaultInterpreterPath": "/Users/rfc/.local/bin/python3.13",
   "explorer.confirmDelete": false,
   "typescript.npm": "/opt/homebrew/bin/pnpm",
   "git.openRepositoryInParentFolders": "never",
@@ -166,15 +165,15 @@
     "*.sqlite3": "${capture}.${extname}-*",
     "*.db3": "${capture}.${extname}-*",
     "*.sdb": "${capture}.${extname}-*",
-    "*.s3db": "${capture}.${extname}-*"
+    "*.s3db": "${capture}.${extname}-*",
   },
   "git.suggestSmartCommit": false,
   "[xml]": {
-    "editor.defaultFormatter": "mikeburgh.xml-format"
+    "editor.defaultFormatter": "mikeburgh.xml-format",
   },
   "gitlens.rebaseEditor.ordering": "asc",
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "githubPullRequests.pullBranch": "never",
   "gitlens.views.commitDetails.files.layout": "tree",
@@ -182,11 +181,29 @@
   "chat.commandCenter.enabled": false,
   "isort.serverEnabled": false,
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "black-formatter.serverTransport": "pipe",
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
   },
-  "python.analysis.typeCheckingMode": "standard"
+  "python.analysis.typeCheckingMode": "standard",
+  "security.workspace.trust.untrustedFiles": "open",
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "docker.extension.enableComposeLanguageServer": false,
+  "python.useEnvironmentsExtension": true,
+  "python-envs.defaultEnvManager": "ms-python.python:uv",
+  "yaml.disableSchemaDetection": [],
+  "git.blame.editorDecoration.enabled": false,
+  "workbench.commandPalette.showAskInChat": false,
+  "workbench.browser.enableChatTools": false,
+  "chat.agent.enabled": false,
+  "markdown-preview-enhanced.scrollSync": false,
+  "markdown.preview.scrollEditorWithPreview": false,
+  "markdown.preview.scrollPreviewWithEditor": false,
+  "markdown.preview.fontSize": 18,
+  "workbench.browser.sendElementsToChat.attachImages": false,
+  "chat.disableAIFeatures": true,
 }

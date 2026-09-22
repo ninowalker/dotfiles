@@ -1,7 +1,20 @@
-Host pi
-    User future
-    HostName 192.168.1.44
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# This won't be added again if you remove it.
+Include ~/.orbstack/ssh/config
+
+Host github.com-nino-robotfutures-co
+  HostName github.com
+  #IgnoreUnknown AddKeysToAgent,UseKeychain
+  #AddKeysToAgent yes
+  #UseKeychain yes
+  User git
+  IdentityFile ~/.ssh/id_ed25519_natrfc
 
 Host github.com
     User git
+    #IgnoreUnknown AddKeysToAgent,UseKeychain
+    #AddKeysToAgent yes
+    #UseKeychain yes
     StrictHostKeyChecking off
+    IdentityFile ~/.ssh/id_rsa
