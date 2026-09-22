@@ -124,8 +124,6 @@ if [[ $- == *i* ]]; then
 	export PS1="\u${white}@\h:${cyan}[\W]:${reset}\\$ "
 fi
 
-# . "$HOME/.grit/bin/env"
-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/rfc/.cache/lm-studio/bin"
 
