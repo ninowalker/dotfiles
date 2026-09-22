@@ -50,6 +50,9 @@ fi
 #### MacOS OS Check ####
 
 if [[ $(uname) == "Darwin" ]]; then
+	if [ -x /opt/homebrew/bin/brew ]; then
+		eval "$(/opt/homebrew/bin/brew shellenv)"
+	fi
 	if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
 		# shellcheck source=/dev/null
 		source "$(brew --prefix)/etc/bash_completion"
