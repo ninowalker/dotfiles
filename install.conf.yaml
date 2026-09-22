@@ -29,9 +29,6 @@
       glob: true
       path: Code/*
       if: "[ `uname` = Linux ]"
-    ~/.config/yamllint/config:
-      create: true
-      path: .yamllint.yml
     ~/.gitconfig:
       path: .gitconfig
       force: true
@@ -42,26 +39,9 @@
       if: "[ `uname` = Darwin ]"
     ~/.gitignore_global:
       path: .gitignore_global
-    ~/.hyper.js:
-      path: .hyper.js
-    ~/OSX/.macos:
-      path: .macos
-      if: "[ `uname` = Darwin ]"
     ~/.p10k.zsh:
       path: .p10k.zsh
       force: true
-    ~/.condarc:
-      path: .condarc
-    ~/.pylintrc:
-      path: .pylintrc
-    ~/.tmux.conf:
-      path: .tmux.conf
-    # ~/.vim:
-    #   path: .vim
-    # ~/.vimrc:
-    #   path: .vimrc
-    ~/.yamllint.yml:
-      path: .yamllint.yml
     ~/.zshrc:
       path: .zshrc
       force: true
@@ -96,12 +76,13 @@
       description: Installing oh-my-zsh
     - command: if [[ ! -d "$HOME"/powerlevel10k ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/powerlevel10k; fi
       description: Installing Powerlevel10k
-    - command: if [[ $(uname) == "Darwin" ]]; then source $HOME/.macos; fi
-      description: Setting up macOS
+    - command: if [[ $(uname) == "Darwin" ]]; then ./OSX/defaults.setup; fi
+      description: Setting macOS preferences
+      stdin: true
     - command: if [[ "$(echo $0)" != *"zsh"* ]]; then if [[ $(uname) == "Linux" ]]; then USER="$(whoami)" sudo usermod --shell /bin/zsh "$USER"; else chsh -s "$(which zsh)"; fi; fi
       description: Changing shell to ZSH
-    - command: if [[ ! -f "$HOME"/.ssh/id_rsa ]]; then mkdir -p "$HOME"/.ssh && ssh-keygen ; fi
-      description: create a key if not present
+    - command: if ! ls "$HOME"/.ssh/id_* &>/dev/null; then mkdir -p "$HOME"/.ssh && ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519; fi
+      description: Creating an SSH key if there is none
       stdout: true
       stderr: true
       stdin: true

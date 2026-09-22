@@ -19,11 +19,6 @@ status = auto
 branch = auto
 interactive = auto
 diff = auto
-[color]
-status = auto
-branch = auto
-interactive = auto
-diff = auto
 ui = auto
 [diff]
 tool = default-difftool
