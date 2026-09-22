@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Remove stopped docker containers and dangling images.
+#
+#   dclean            list what would be removed
+#   dclean --delete   remove it
+#
+# Stopped means exited or created (never started). Dangling images are untagged
+# layers left behind when a tag moves to a newer build. Volumes are not touched;
+# see dvol for those.
+set -euo pipefail
+
+case "${1:-}" in
+"") delete=false ;;
+--delete) delete=true ;;
+*)
+    sed -n '2,9s/^# \{0,1\}//p' "$0" >&2
+    exit 1
+    ;;
+esac
+
+containers=$(docker ps --all --quiet --filter status=exited --filter status=created)
+images=$(docker images --quiet --filter dangling=true)
+
+if [[ -z "$containers" && -z "$images" ]]; then
+    echo "nothing to remove"
+    exit 0
+fi
+
+if [[ -n "$containers" ]]; then
+    echo "stopped containers:"
+    docker ps --all --filter status=exited --filter status=created \
+        --format '  {{.ID}}  {{.Names}}  {{.Image}}  {{.Status}}'
+fi
+if [[ -n "$images" ]]; then
+    echo "dangling images:"
+    docker images --filter dangling=true --format '  {{.ID}}  {{.Size}}  created {{.CreatedSince}}'
+fi
+
+if ! $delete; then
+    echo "run with --delete to remove them"
+    exit 0
+fi
+
+# Containers first, so images they held become removable.
+[[ -n "$containers" ]] && docker rm $containers >/dev/null
+[[ -n "$images" ]] && docker image prune --force
+echo "done"

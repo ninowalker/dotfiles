@@ -17,8 +17,8 @@ git clone https://github.com/ninowalker/dotfiles .dotfiles --recursive
 The following will be setup using this method:
 
 - dotfiles
-- Python
 - Homebrew itself, but not packages; see [Homebrew packages](#homebrew-packages)
+- macOS preferences, from [OSX/defaults.setup](OSX/defaults.setup)
 
 ```bash
 cd ~/.dotfiles
@@ -40,6 +40,13 @@ everything works as planned in all scenarios between `Linux` and `MacOS`.
 ### .gitconfig
 
 Make sure to reset the user and email. Or you'll be using mine.
+
+### macOS preferences
+
+[OSX/defaults.setup](OSX/defaults.setup) writes Finder, Dock, trackpad, keyboard, screenshot and
+locale preferences with `defaults write`. `./install` runs it; it is safe to re-run. Pass a name
+to also set the computer name: `OSX/defaults.setup <name>`. It asks for sudo once, to unhide
+`/Volumes`.
 
 ### launchd
 
@@ -116,7 +123,7 @@ Check the dry run before `--force`. When Homebrew renames a formula, the dry run
 new name as removable while the old name is still installed and needed. `sdl2`, renamed to
 `sdl2-compat` and required by `ffmpeg`, is one case. `brew upgrade` resolves it.
 
-## Docker volumes
+## Docker
 
 [bin/dvol](bin/dvol) backs up and restores docker volumes by copying one volume into another
 through a throwaway `alpine` container. File ownership and permissions are kept.
@@ -134,6 +141,10 @@ dvol restore pgdata-premigr pgdata # deletes pgdata and recreates it from the ba
   running or stopped, uses the target, since docker cannot delete the volume then.
 - Both refuse a source volume that does not exist. `docker run -v` would otherwise create an
   empty one and copy nothing.
+
+[bin/dclean](bin/dclean) removes stopped containers (exited, or created and never started) and
+dangling images. It lists them by default; `dclean --delete` removes them. It leaves volumes
+alone.
 
 ## Visual Studio Code Extensions
 
