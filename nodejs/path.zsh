@@ -7,9 +7,9 @@
 # Add fnm to PATH
 export PATH="$HOME/Library/Application Support/fnm:$PATH"
 
-# Initialize fnm in the current shell
-# This sets up shell completions, PATH modifications, and other environment variables needed by fnm
-eval "$(fnm env)"
+# Initialize fnm in the current shell and switch versions on cd. Completions come
+# from the oh-my-zsh fnm plugin.
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # pnpm (Performant NPM) is an alternative to npm and yarn
 # It's a fast, disk space efficient package manager for Node.js
