@@ -17,7 +17,7 @@ export DOTFILES_DIR="$HOME/.dotfiles"
 # shellcheck disable=SC2034
 ZSH_DISABLE_COMPFIX="true"
 
-plugins=(iterm2 fzf fnm virtualenv zsh-interactive-cd)
+plugins=(iterm2 fzf virtualenv zsh-interactive-cd)
 # # shellcheck source=/dev/null
 source "$ZSH"/oh-my-zsh.sh
 
