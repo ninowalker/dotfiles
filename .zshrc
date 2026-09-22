@@ -71,9 +71,6 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # Added by LM Studio CLI (lms)
 # export PATH="$PATH:/Users/rfc/.cache/lm-studio/bin"
 
-# Added by Windsurf
-# export PATH="/Users/rfc/.codeium/windsurf/bin:$PATH"
-
 # Load Angular CLI autocompletion.
 # source <(ng completion script)
 
