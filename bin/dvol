@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# Back up and restore docker volumes by copying one volume into another.
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage:
+  $(basename "$0") backup <volume> [<backup>]
+      Copy <volume> into a new volume. <backup> defaults to
+      <volume>-YYYYmmdd-HHMMSS and must not exist yet.
+  $(basename "$0") restore <backup> <volume>
+      Replace the contents of <volume> with a copy of <backup>. <volume> is
+      deleted and recreated, so no container may be using it.
+
+Stop containers that write to the source volume first, or the copy may be
+inconsistent.
+EOF
+}
+
+die() {
+    echo "$(basename "$0"): $*" >&2
+    exit 1
+}
+
+exists() {
+    docker volume inspect "$1" >/dev/null 2>&1
+}
+
+users() {
+    docker ps --all --filter "volume=$1" --format '{{.Names}} ({{.State}})' | paste -sd, -
+}
+
+copy() {
+    local from=$1 to=$2
+    docker volume create "$to" >/dev/null
+    docker run --rm -v "$from:/from:ro" -v "$to:/to" alpine cp -a /from/. /to/
+}
+
+backup() {
+    local src=$1 dst=${2:-$1-$(date +%Y%m%d-%H%M%S)}
+    exists "$src" || die "no such volume: $src"
+    exists "$dst" && die "volume already exists: $dst"
+    local running
+    running=$(docker ps --filter "volume=$src" --format '{{.Names}}' | paste -sd, -)
+    [[ -n "$running" ]] && echo "warning: $src is in use by running containers: $running" >&2
+    copy "$src" "$dst"
+    echo "backed up $src to $dst"
+}
+
+restore() {
+    local src=$1 dst=$2
+    [[ "$src" != "$dst" ]] || die "backup and target are the same volume"
+    exists "$src" || die "no such volume: $src"
+    if exists "$dst"; then
+        local used
+        used=$(users "$dst")
+        [[ -z "$used" ]] || die "$dst is used by containers: $used"
+        docker volume rm "$dst" >/dev/null
+    fi
+    copy "$src" "$dst"
+    echo "restored $src to $dst"
+}
+
+case "${1:-}" in
+backup)
+    [[ $# -eq 2 || $# -eq 3 ]] || { usage >&2; exit 1; }
+    backup "${@:2}"
+    ;;
+restore)
+    [[ $# -eq 3 ]] || { usage >&2; exit 1; }
+    restore "$2" "$3"
+    ;;
+-h | --help)
+    usage
+    ;;
+*)
+    usage >&2
+    exit 1
+    ;;
+esac

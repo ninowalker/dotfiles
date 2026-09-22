@@ -116,6 +116,25 @@ Check the dry run before `--force`. When Homebrew renames a formula, the dry run
 new name as removable while the old name is still installed and needed. `sdl2`, renamed to
 `sdl2-compat` and required by `ffmpeg`, is one case. `brew upgrade` resolves it.
 
+## Docker volumes
+
+[bin/dvol](bin/dvol) backs up and restores docker volumes by copying one volume into another
+through a throwaway `alpine` container. File ownership and permissions are kept.
+
+```bash
+dvol backup pgdata                 # copies into pgdata-YYYYmmdd-HHMMSS
+dvol backup pgdata pgdata-premigr  # copies into a name you choose
+dvol restore pgdata-premigr pgdata # deletes pgdata and recreates it from the backup
+```
+
+- `backup` refuses to overwrite an existing volume. It warns, but continues, when a running
+  container uses the source. Stop containers that write to it first, or the copy may be
+  inconsistent.
+- `restore` replaces the target instead of merging into it. It refuses while any container,
+  running or stopped, uses the target, since docker cannot delete the volume then.
+- Both refuse a source volume that does not exist. `docker run -v` would otherwise create an
+  empty one and copy nothing.
+
 ## Visual Studio Code Extensions
 
 You can find some VS Code extensions exported [here](Code/extensions.list) which
