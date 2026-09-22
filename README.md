@@ -18,7 +18,7 @@ The following will be setup using this method:
 
 - dotfiles
 - Python
-- Brew
+- Homebrew itself, but not packages; see [Homebrew packages](#homebrew-packages)
 
 ```bash
 cd ~/.dotfiles
@@ -82,6 +82,39 @@ Relocating does not reclaim anything by itself. Three things keep it down:
    and removes whatever matches none of them. `--delete` to act, otherwise it reports.
 3. **Fewer worktrees.** Each one costs a set of environments per sub-project. Even deduplicated
    they are not free.
+
+## Homebrew packages
+
+[OSX/Brewfile](OSX/Brewfile) records the installed taps, formulae and casks.
+[OSX/path.zsh](OSX/path.zsh) regenerates it with `brew bundle dump` once a day, in the
+background, when an interactive shell starts. Commit the changes it makes.
+
+The dump lists only formulae marked as installed on request, so dependencies stay out of it
+and `brew autoremove` can remove them once nothing needs them. If a dependency shows up in the
+Brewfile, clear the mark rather than deleting the line:
+
+```bash
+brew tab --no-installed-on-request <formula>
+```
+
+To install everything on a new machine, run [OSX/brew.setup](OSX/brew.setup), which runs
+`brew bundle install` against the Brewfile. `./install` does not run it.
+
+To remove packages, delete their lines from the Brewfile, then uninstall whatever is no longer
+listed:
+
+```bash
+brew bundle cleanup --file="$HOME/.dotfiles/OSX/Brewfile"         # dry run
+brew bundle cleanup --file="$HOME/.dotfiles/OSX/Brewfile" --force
+```
+
+Deleting a line without uninstalling the package does not last: the next daily dump adds it
+back. Casks that install system files ask for sudo, which fails when the command runs without a
+terminal; run those uninstalls yourself.
+
+Check the dry run before `--force`. When Homebrew renames a formula, the dry run can list the
+new name as removable while the old name is still installed and needed. `sdl2`, renamed to
+`sdl2-compat` and required by `ffmpeg`, is one case. `brew upgrade` resolves it.
 
 ## Visual Studio Code Extensions
 
