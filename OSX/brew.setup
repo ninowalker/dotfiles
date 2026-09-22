@@ -1,41 +1,10 @@
-#!/bin/bash
+#!/bin/bash -e
 
-# Install Homebrew
-test -e /opt/homebrew/bin/brew || ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-PATH="/opt/homebrew/bin:$PATH"
-brew update
-brew upgrade
-
-export HOMEBREW_NO_AUTO_UPDATE=1
-
-packages=($(grep -v -f <(brew list --formulae | sort | perl -ne 'chomp; print "^$_\$\n"') "$HOME/.dotfiles/OSX/formulae.list"))
-
-# Install packages
-if [ -n "$packages" ]; then
-    echo "Installing formulae..."
-    for p in "${packages[@]}"; do
-        echo "installing $p..."
-        brew install "$p"
-    done
-fi
-# Wait a bit before moving on...
-sleep 1
-
-# ...and then.
-echo "Success! Basic brew packages are installed."
-
-# Install cask packages
-apps="$(grep -v -f <(brew list --casks | sort | perl -ne 'chomp; print "^$_\$\n"') "$HOME/.dotfiles/OSX/casks.list")"
-
-if [ -n "$apps" ]; then
-    echo "Installing casks..."
-    for c in "${apps[@]}"; do
-        brew install --appdir="/Applications" "homebrew/cask/$c"
-    done
+# Install the taps, formulae and casks recorded in OSX/Brewfile. OSX/path.zsh
+# regenerates that file from what is installed.
+if ! command -v brew >/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Wait a bit before moving on...
-sleep 1
-
-# ...and then.
-echo "Success! Brew casks are installed."
+brew bundle install --file="$HOME/.dotfiles/OSX/Brewfile"

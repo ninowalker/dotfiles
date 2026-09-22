@@ -80,4 +80,4 @@ Other Logitech jobs, left running:
 - `com.logitech.manager.daemon` — `/Library/LaunchAgents/`, old non-Plus Logi Options. Its
   binary (`/Applications/Logi Options.app`) is gone; dead leftover.
 
-Options+ is not in `OSX/casks.list`, so `./install` won't reinstall it.
+Options+ is not in `OSX/Brewfile`, so `OSX/brew.setup` won't reinstall it.
