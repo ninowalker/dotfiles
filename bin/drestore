@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Initialize variables
+FORCE=false
+
+# Parse options
+while getopts "f" opt; do
+  case $opt in
+    f)
+      FORCE=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Shift the parsed options away, leaving volume names as arguments
+shift $((OPTIND-1))
+
+# Name of the backup volume
+BACKUP_VOLUME=$1
+# Name of the volume to restore to
+TARGET_VOLUME=$2
+
+# Check if both volume names are provided
+if [ -z "$BACKUP_VOLUME" ] || [ -z "$TARGET_VOLUME" ]; then
+  echo "Usage: $0 [-f] <backup_volume> <target_volume>"
+  echo "  -f : Force replace the target volume if it exists"
+  exit 1
+fi
+
+# If the force option is enabled, remove the target volume if it exists
+if [ "$FORCE" = true ]; then
+  echo "Force option enabled. Removing existing target volume: $TARGET_VOLUME"
+  docker volume rm "$TARGET_VOLUME"
+fi
+
+# Create the target volume (freshly, if -f was used)
+docker volume create "$TARGET_VOLUME"
+
+# Create a temporary container to copy data from the backup volume to the target volume
+docker run --rm \
+  -v "$BACKUP_VOLUME:/from" \
+  -v "$TARGET_VOLUME:/to" \
+  alpine ash -c "cd /from && cp -a . /to"
+
+echo "Restored data from $BACKUP_VOLUME to $TARGET_VOLUME completed."

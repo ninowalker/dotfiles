@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# TODO: get the SSID and PASS from the args or automatically fetch them:
+# Check if the SSID and PASS are provided as arguments
+if [ "$#" -eq 0 ]; then
+  # Get the current SSID
+  SSID=$(networksetup -getairportnetwork en0 | awk -F': ' '{print $2}')
+
+  # Retrieve the password
+  PASSWORD=$(security find-generic-password -D "AirPort network password" -wa "$SSID")
+
+elif [ "$#" -eq 2 ]; then
+  SSID="$1"
+  PASSWORD="$2"
+else
+  echo "Usage: $0 [<SSID> <PASSWORD>]"
+  exit 1
+
+fi
+
+# Retrieve the security type
+SECURITY=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk -F': ' '/^ *Security/ {print $2}')
+
+# Adjust the security type for the QR code
+case "$SECURITY" in
+"WPA2 Personal") SECURITY="WPA" ;;
+"WEP") SECURITY="WEP" ;;
+"None") SECURITY="nopass" ;;
+*) SECURITY="WPA" ;;
+esac
+
+# Output network information
+echo "SSID: $SSID"
+echo "Password: $PASSWORD"
+echo "Security: $SECURITY"
+
+tempdir=$(mktemp -d)
+tempfile="${tempdir}/${SSID}-qrcode.png"
+
+# Generate QR code for WiFi access
+qrencode -s 5 -d 150 -o "$tempfile" -t PNG -l H "WIFI:T:$SECURITY;S:$SSID;P:$PASSWORD;;"
+
+# Add the SSID above the QR code using imagemagick
+# convert "$tempfile" -gravity North -extent +0-30+0+0 -gravity North -annotate +0+10 "$SSID" "${tempfile%.png}_annotated.png"
+convert "$tempfile" -gravity North -background White -splice 0x30 -gravity North -annotate +0+10 "$SSID" "${tempfile%.png}_annotated.png"
+
+# Open the annotated QR code
+open -a Preview "${tempfile%.png}_annotated.png"
+
+#open -a Preview "$tempfile"
+echo "Waiting..."
+read
+rm -rf "$tempdir"
