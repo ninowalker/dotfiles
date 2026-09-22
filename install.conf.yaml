@@ -79,6 +79,9 @@
     - command: if [[ $(uname) == "Darwin" ]]; then ./OSX/defaults.setup; fi
       description: Setting macOS preferences
       stdin: true
+    - command: if [[ $(uname) == "Darwin" ]]; then sudo install -d -m 755 "/Library/Application Support/ClaudeCode/managed-settings.d" && sudo install -m 644 claude/managed-settings.d/*.json "/Library/Application Support/ClaudeCode/managed-settings.d/"; fi
+      description: Installing Claude Code managed security settings (copied, root-owned)
+      stdin: true
     - command: if [[ "$(echo $0)" != *"zsh"* ]]; then if [[ $(uname) == "Linux" ]]; then USER="$(whoami)" sudo usermod --shell /bin/zsh "$USER"; else chsh -s "$(which zsh)"; fi; fi
       description: Changing shell to ZSH
     - command: if ! ls "$HOME"/.ssh/id_* &>/dev/null; then mkdir -p "$HOME"/.ssh && ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519; fi

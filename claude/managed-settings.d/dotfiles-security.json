@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.kube/**)",
+      "Read(~/.netrc)",
+      "Read(~/.git-credentials)",
+      "Read(~/.npmrc)",
+      "Read(~/.pypirc)",
+      "Read(~/.pgpass)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/dev/admin/vault/**)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Edit(~/.dotfiles/claude/managed-settings.d/**)"
+    ]
+  }
+}

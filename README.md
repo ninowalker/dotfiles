@@ -48,6 +48,26 @@ locale preferences with `defaults write`. `./install` runs it; it is safe to re-
 to also set the computer name: `OSX/defaults.setup <name>`. It asks for sudo once, to unhide
 `/Volumes`.
 
+### Claude Code security settings
+
+[claude/managed-settings.d/dotfiles-security.json](claude/managed-settings.d/dotfiles-security.json)
+denies Claude Code reads of credential files: SSH, AWS, GnuPG, gcloud, gh, docker and kube
+config, `.netrc` and similar, Claude's own credentials, and any `.env` or `.env.*` file.
+`./install` copies it, owned by root, into
+`/Library/Application Support/ClaudeCode/managed-settings.d/`. After editing it, copy it again
+with the same command from `install.conf.yaml`.
+
+- Managed settings rank above user and project settings. Their deny rules add to the allow rules
+  in `~/.claude/settings.json` rather than replacing them, and a deny beats any allow.
+- It is copied rather than linked so an agent that can edit this repo cannot loosen the live
+  rules. The file also denies edits to its source in the repo.
+- A `Read` deny also covers `cat`, `grep` and similar commands run through Bash, but not every
+  route: a command wrapped in `sh -c`, or a program that reads the file itself, gets through.
+  Claude Code's sandbox (`sandbox.filesystem.denyRead`) enforces this at the OS level; it is not
+  enabled here.
+- `.env.*` also matches `.env.example`.
+- The rest of `~/.claude` (settings, hooks, skills, history) is not tracked.
+
 ### launchd
 
 Notes on finding and disabling macOS background agents and daemons, plus a log of what is
