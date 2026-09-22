@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+# Check if fzf is installed
+if ! command -v fzf &>/dev/null; then
+    echo "Error: fzf is not installed. Please install fzf to use this script."
+    exit 1
+fi
+
+# Read the list from stdin into an array
+mapfile -t lines
+
+# Get the current directory path
+current_path=$(pwd)
+
+# Split the path into its components and store them in an array
+IFS='/' read -ra path_parts <<<"$current_path"
+
+# Remove any empty elements (this can happen if the path starts with '/')
+dirs_in_path=()
+for dir in "${path_parts[@]}"; do
+    if [[ -n "$dir" ]]; then
+        dirs_in_path+=("$dir")
+    fi
+done
+
+# Process the lines to extract the names (remove counts and leading spaces)
+names=()
+for line in "${lines[@]}"; do
+    # Remove leading spaces
+    line=$(echo "$line" | sed 's/^ *//')
+    # Extract the name (everything after the first number)
+    name=$(echo "$line" | awk '{$1=""; print substr($0,2)}')
+
+    # Skip names that are already in the current directory path
+    skip=0
+    for dir in "${dirs_in_path[@]}"; do
+        if [[ "$name" == "$dir" ]]; then
+            skip=1
+            break
+        fi
+    done
+    if [[ $skip -eq 1 ]]; then
+        continue
+    fi
+
+    names+=("$name")
+done
+
+# Check if there are any names left after filtering
+if [[ ${#names[@]} -eq 0 ]]; then
+    echo "No items to select. All items are already present in the current directory path."
+    exit 0
+fi
+
+# Use fzf to allow the user to select items
+selected_names=$(printf '%s\n' "${names[@]}" | fzf -m --prompt="Select items to create directories: " --height=50%)
+
+# Check if the user made a selection
+if [[ -z "$selected_names" ]]; then
+    echo "No items selected."
+    exit 1
+fi
+
+# Create directories for the selected items
+while IFS= read -r dir_name; do
+    echo "Creating directory: '$dir_name'"
+    mkdir -p "$dir_name"
+done <<<"$selected_names"
