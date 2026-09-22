@@ -14,7 +14,6 @@
       "Read(~/.pypirc)",
       "Read(~/.pgpass)",
       "Read(~/.claude/.credentials.json)",
-      "Read(~/dev/admin/vault/**)",
       "Read(**/.env)",
       "Read(**/.env.*)",
       "Edit(~/.dotfiles/claude/managed-settings.d/**)"
