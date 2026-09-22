@@ -17,12 +17,7 @@ export DOTFILES_DIR="$HOME/.dotfiles"
 # shellcheck disable=SC2034
 ZSH_DISABLE_COMPFIX="true"
 
-# virtualenvwrapper is installed with pipx, so its module is only importable from
-# the pipx venv's python, not from Homebrew's python3.
-VIRTUALENVWRAPPER_PYTHON="$HOME/.local/pipx/venvs/virtualenvwrapper/bin/python"
-[[ -x "$VIRTUALENVWRAPPER_PYTHON" ]] && export VIRTUALENVWRAPPER_PYTHON || unset VIRTUALENVWRAPPER_PYTHON
-
-plugins=(iterm2 fzf fnm virtualenv virtualenvwrapper zsh-interactive-cd)
+plugins=(iterm2 fzf fnm virtualenv zsh-interactive-cd)
 # # shellcheck source=/dev/null
 source "$ZSH"/oh-my-zsh.sh
 
