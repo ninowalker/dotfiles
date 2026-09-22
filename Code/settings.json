@@ -195,7 +195,14 @@
   "docker.extension.enableComposeLanguageServer": false,
   "python.useEnvironmentsExtension": true,
   "python-envs.defaultEnvManager": "ms-python.python:uv",
-  "yaml.disableSchemaDetection": [],
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
   "git.blame.editorDecoration.enabled": false,
   "workbench.commandPalette.showAskInChat": false,
   "workbench.browser.enableChatTools": false,
