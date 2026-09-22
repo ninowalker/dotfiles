@@ -121,12 +121,6 @@ if [[ $- == *i* ]]; then
 	export PS1="\u${white}@\h:${cyan}[\W]:${reset}\\$ "
 fi
 
-# Capture existing VSCode extensions
-# Skip if running in WSL
-if [ -x "$(command -v code)" ] && [[ "$(uname -r)" != *"microsoft"* ]]; then
-	code --list-extensions >"$HOME"/.dotfiles/Code/extensions.list
-fi
-
 # . "$HOME/.grit/bin/env"
 
 # Added by LM Studio CLI (lms)
