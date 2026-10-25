@@ -2,6 +2,7 @@
 # This only works if it's at the top of ssh_config (before any Host blocks).
 # This won't be added again if you remove it.
 Include ~/.orbstack/ssh/config
+Include ~/.ssh/config.local
 
 Host github.com-nino-robotfutures-co
   HostName github.com
@@ -18,3 +19,4 @@ Host github.com
     #UseKeychain yes
     StrictHostKeyChecking off
     IdentityFile ~/.ssh/id_rsa
+
