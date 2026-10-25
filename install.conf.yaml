@@ -9,34 +9,9 @@
     - ~/projects
 
 - link:
-    ~/.ssh/:
-      create: true
-      glob: true
-      path: ssh/*
-    ~/.bash_profile:
-      path: .bash_profile
-      force: true
-    ~/.bashrc:
-      path: .bashrc
-      force: true
-    ~/.aws/:
-      create: true
-      glob: true
-      path: .aws/*
-    ~/.config/Code/User/:
-      create: true
-      exclude: [Code/snippets]
-      glob: true
-      path: Code/*
-      if: "[ `uname` = Linux ]"
     ~/.gitconfig:
       path: .gitconfig
       force: true
-    ~/Library/Application Support/hatch/config.toml:
-      create: true
-      path: hatch/config.toml
-      force: true
-      if: "[ `uname` = Darwin ]"
     ~/.gitignore_global:
       path: .gitignore_global
     ~/.p10k.zsh:
@@ -51,39 +26,29 @@
     ~/.zshenv:
       path: .zshenv
       force: true
-    ~/Library/Application Support/Code/User/:
-      create: true
-      exclude: [Code/snippets]
-      glob: true
-      path: Code/*
-      if: "[ `uname` = Darwin ]"
 
 - shell:
     - command: git submodule update --init --recursive
       description: Installing submodules
-    - command: ./setup.sh
-      description: Executing setup script
+    - command: ./ubuntu/setup.sh
+      description: Installing packages and fonts
       stdout: true
       stderr: true
       stdin: true
-    - command: if [[ $(uname) == "Linux" ]]; then if [ ! -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then git clone https://github.com/magicmonty/bash-git-prompt.git "$HOME/.bash-git-prompt" --depth=1; fi; fi
-      description: Installing bash-git-prompt
     - command: if [ ! -f "$HOME/.netrc" ]; then touch "$HOME/.netrc"; fi
       description: Creating $HOME/.netrc
-    - command: mkdir -p "$HOME/.config/uv" && printf 'cache-dir = "%s/Library/Caches/dev/uv"\n' "$HOME" > "$HOME/.config/uv/uv.toml"
-      description: Pointing the uv cache at ~/Library/Caches/dev (uv.toml expands neither ~ nor $HOME, so it is generated)
+    - command: mkdir -p "$HOME/.config/uv" && printf 'cache-dir = "%s/.cache/dev/uv"\n' "$HOME" > "$HOME/.config/uv/uv.toml"
+      description: Pointing the uv cache at ~/.cache/dev (uv.toml expands neither ~ nor $HOME, so it is generated)
     - command: if [[ ! -d "$HOME"/.oh-my-zsh ]]; then git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME"/.oh-my-zsh; fi
       description: Installing oh-my-zsh
     - command: if [[ ! -d "$HOME"/powerlevel10k ]]; then git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME"/powerlevel10k; fi
       description: Installing Powerlevel10k
-    - command: if [[ $(uname) == "Darwin" ]]; then ./OSX/defaults.setup; fi
-      description: Setting macOS preferences
-      stdin: true
-    - command: if [[ $(uname) == "Darwin" ]]; then sudo install -d -m 755 "/Library/Application Support/ClaudeCode/managed-settings.d" && sudo install -m 644 claude/managed-settings.d/*.json "/Library/Application Support/ClaudeCode/managed-settings.d/"; fi
+    - command: sudo install -d -m 755 /etc/claude-code/managed-settings.d && sudo install -m 644 claude/managed-settings.d/*.json /etc/claude-code/managed-settings.d/
       description: Installing Claude Code managed security settings (copied, root-owned)
       stdin: true
-    - command: if [[ "$(echo $0)" != *"zsh"* ]]; then if [[ $(uname) == "Linux" ]]; then USER="$(whoami)" sudo usermod --shell /bin/zsh "$USER"; else chsh -s "$(which zsh)"; fi; fi
+    - command: 'if [[ "$(getent passwd "$(whoami)" | cut -d: -f7)" != */zsh ]]; then chsh -s /usr/bin/zsh; fi'
       description: Changing shell to ZSH
+      stdin: true
     - command: if ! ls "$HOME"/.ssh/id_* &>/dev/null; then mkdir -p "$HOME"/.ssh && ssh-keygen -t ed25519 -f "$HOME"/.ssh/id_ed25519; fi
       description: Creating an SSH key if there is none
       stdout: true

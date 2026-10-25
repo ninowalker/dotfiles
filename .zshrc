@@ -17,7 +17,7 @@ export DOTFILES_DIR="$HOME/.dotfiles"
 # shellcheck disable=SC2034
 ZSH_DISABLE_COMPFIX="true"
 
-plugins=(iterm2 fzf virtualenv zsh-interactive-cd)
+plugins=(fzf virtualenv zsh-interactive-cd)
 # # shellcheck source=/dev/null
 source "$ZSH"/oh-my-zsh.sh
 
@@ -61,16 +61,3 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Added by LM Studio CLI (lms)
-# export PATH="$PATH:/Users/rfc/.cache/lm-studio/bin"
-
-# Load Angular CLI autocompletion.
-# source <(ng completion script)
-
-# peon-ping quick controls
-alias peon="bash ~/.claude/hooks/peon-ping/peon.sh"
-[ -f ~/.claude/hooks/peon-ping/completions.bash ] && source ~/.claude/hooks/peon-ping/completions.bash
-
-# ante
-export PATH="/Users/rfc/.ante/bin:$PATH"

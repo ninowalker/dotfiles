@@ -8,10 +8,9 @@
 # Both tools default to locations that grow without bound. A project with ~50
 # git worktrees gets one hatch env tree per worktree per sub-project per env,
 # which reached 38G, while the uv cache reached 39G. Neither is hardlinked to
-# the other, so the cost is paid twice. ~/Library/Caches is skipped by Time
-# Machine and reclaimable by macOS as purgeable space, and everything here
-# rebuilds on demand.
-export DEV_CACHE="$HOME/Library/Caches/dev"
+# the other, so the cost is paid twice. ~/.cache is the XDG cache directory,
+# and everything here rebuilds on demand.
+export DEV_CACHE="$HOME/.cache/dev"
 export UV_CACHE_DIR="$DEV_CACHE/uv"
 
 # Make hatch install with uv rather than pip. hatch has no "use uv" flag and no
@@ -21,9 +20,9 @@ export UV_CACHE_DIR="$DEV_CACHE/uv"
 #   use_uv = installer == "uv" or bool(explicit_uv_path)   (hatch/env/virtual.py)
 #
 # This matters more than where the files live. pip copies every wheel into every
-# environment; uv clones them from its cache, and APFS clones share blocks. A
-# second worktree building the same environment measured 2 MB against pip's
-# 130 MB. It only holds while $UV_CACHE_DIR and the hatch env directory sit on
+# environment; uv hardlinks them from its cache on ext4 (it clones them on
+# APFS). On macOS a second worktree building the same environment measured 2 MB
+# against pip's 130 MB. It only holds while $UV_CACHE_DIR and the hatch env directory sit on
 # one filesystem, so move them together.
 #
 # $commands is zsh's hash of external commands, so this costs no subshell on a
